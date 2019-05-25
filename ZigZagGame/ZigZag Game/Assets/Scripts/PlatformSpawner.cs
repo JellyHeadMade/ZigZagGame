@@ -13,6 +13,8 @@ public class PlatformSpawner : MonoBehaviour
 
     public bool gameOver;
 
+    public GameObject diamonds;
+
    
 
 
@@ -28,13 +30,18 @@ public class PlatformSpawner : MonoBehaviour
             SpawnPlatforms();
         }
 
-        InvokeRepeating("SpawnPlatforms", 2f, 0.2f);
+       
+    }
+
+    public void StartSpawningPlatforms()
+    {
+        InvokeRepeating("SpawnPlatforms", 0.1f, 0.2f);
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (gameOver)
+        if (GameManager.instance.gameOver == true)
         {
             CancelInvoke("SpawnPlatforms");
         }
@@ -62,6 +69,13 @@ public class PlatformSpawner : MonoBehaviour
         lastPos = pos;
 
         Instantiate(platform, pos, Quaternion.identity);
+
+        int rand = Random.Range(0, 4);
+        if(rand < 1)
+        {
+            Instantiate(diamonds, new Vector3(pos.x,pos.y + 1, pos.z), diamonds.transform.rotation);
+        }
+        
     }
 
     void SpawnZ()
@@ -71,5 +85,11 @@ public class PlatformSpawner : MonoBehaviour
         lastPos = pos;
 
         Instantiate(platform, pos, Quaternion.identity);
+
+        int rand = Random.Range(0, 4);
+        if(rand < 1)
+        {
+            Instantiate(diamonds, new Vector3(pos.x, pos.y + 1, pos.z), diamonds.transform.rotation);
+        }
     }
 }
